@@ -1,0 +1,471 @@
+<!--
+slidedeck: A modification of the Google IO 2012 HTML5 slide template
+URL: https://github.com/rmcgibbo/slidedeck
+
+Based on https://github.com/francescolaffi/elastic-google-io-slides, and
+ultimately:
+
+Google IO 2012 HTML5 Slide Template
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahe <lukem@google.com>
+URL: https://code.google.com/p/io-2012-slides
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title> omnia.md: Engineering a Full Python Stack for Biophysical Computation</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  
+  <link rel="stylesheet" media="all" href="theme/css/default.css">
+  <link rel="stylesheet" media="all" href="theme/css/custom.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="js/slides", src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.min.js"></script>
+
+
+  <!-- MathJax support  -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    showProcessingMessages: false,
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    TeX: {
+      extensions: ["color.js"]
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <div style="display:hidden">
+  \[
+    \definecolor{data}{RGB}{18,110,213}
+    \definecolor{unknown}{RGB}{217,86,16}
+    \definecolor{learned}{RGB}{175,114,176}
+  \]
+  </div>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+<slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+
+    <h1> omnia.md: Engineering a Full Python Stack for Biophysical Computation</h1>
+    <h2></h2>
+    <p> Kyle A. Beauchamp</p>
+  </hgroup>
+</slide>
+
+
+<slide  >
+  
+    <hgroup>
+      <h2>Moore's Law</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p><center>
+<img height=550 src=figures/moore_law.png />
+</center></p>
+<footer class="source"> 
+http://en.wikipedia.org/wiki/Moore%27s_law
+</footer></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Eroom's Law</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p><center>
+<img height=450 src=figures/eroom.png />
+</center></p>
+<footer class="source"> 
+Scannell, 2012
+</footer></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>How much do drugs cost?  $2,000,000</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p><center>
+<img height=450 src=figures/cost_structure.jpg />
+</center></p>
+<footer class="source"> 
+Paul, 2010
+</footer></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Molecular Dynamics: Easy to sample, Hard to Normalize</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>We mostly understand the microscopic rules governing proteins and ligands:</p>
+<p><mathjax>$$ U(x) =  U_{bonds}(x) +  U_{angles}(x) +  U_{dihedrals}(x) +  U_{LJ}(x) + U_{electrostatic}(x)$$</mathjax>
+<mathjax>$$U_{bonds} = \sum_{i} k_i (r - r_0)^2$$</mathjax>
+<mathjax>$$U_{angles} = \sum_{i} k_i (\theta - \theta_0)^2$$</mathjax>
+<mathjax>$$U_{dihedrals} = \sum_{i} k_i (1 + \cos(n_i \phi_i + \delta_i))$$</mathjax>
+<mathjax>$$ U_{electrostatic} = \sum_{i &gt; j} \frac{q_i q_j} {4 \pi \epsilon_0 r_{ij}} $$</mathjax></p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Some notation</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p><mathjax>$$q_k(x) = \exp(-u_k(x))$$</mathjax>
+<mathjax>$$Z_k = c_k = \int q_k(x) dx$$</mathjax></p>
+<p><mathjax>$$P_k(x) = \frac{1}{c_k} \exp(-u_k(x)) = \frac{1}{c_k} q_k(x_n)$$</mathjax></p>
+<p><mathjax>$$\langle A(x) \rangle_k = \frac{1}{c_k} \int A(x) q_k(x) dx$$</mathjax></p>
+<p>Free energy:</p>
+<p><mathjax>$$f_j - f_i = -\log \frac{c_j}{c_i}$$</mathjax></p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Applications of Normalizing Constants</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul>
+<li>Binding free energy / other chemistry applications</li>
+<li>Bayesian model comparison</li>
+<li>Monte Carlo integration</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Alchemical Free Energy Calculation</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>Key Idea: Binding free energy is a log ratio of normalizing constants</p>
+<p><center>
+<img height=325 src=figures/T4-Phenol.png />
+<img height=325 src=figures/T4-Toluene.png />
+</center></p>
+<footer class="source"> 
+alchemistry.org
+</footer></article>
+ 
+</slide>
+
+<slide class="segue dark nobackground" >
+  
+    <!-- <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside> -->
+    <hgroup class="auto-fadein">
+      <h2>How to estimate normalizing constants of unnormalized distributions?</h2>
+      <h3></h3>
+    </hgroup>
+  
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Exponential Averaging (EXP)</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>Given unnormalized densities <mathjax>$q_1(x)$</mathjax> and <mathjax>$q_2(x)$</mathjax>, notice the following "Zwanzig" identity:</p>
+<p><mathjax>$$\langle \frac{q_2(x)}{q_1(x)} \rangle_1 = \frac{1}{c_1} \int \frac{q_2(x)}{q_1(x)} q_1(x) dx = \frac{1}{c_1} \int q_2(x) dx = \frac{c_2}{c_1}$$</mathjax></p>
+<p>Given samples <mathjax>$x_n$</mathjax> from <mathjax>$q_1(x)$</mathjax>, we can estimate the ratio <mathjax>$\frac{c_2}{c_1}$</mathjax></p>
+<p><mathjax>$$ \frac{c_2}{c_1} = \langle \frac{q_2(x)}{q_1(x)} \rangle_1 \approx \frac{1}{n} \sum_n \frac{q_2(x_n)}{q_1(x_n)}$$</mathjax> </p>
+<p>EXP has large bias and variance due to heavy weights in the tails.  </p>
+<footer class="source"> 
+Zwanzig, 1954
+</footer></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Bennet Acceptance Ratio (BAR)</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>EXP can be improved by using samples from <mathjax>$q_1(x)$</mathjax> and <mathjax>$q_2(x)$</mathjax>.  Requires solving nonlinear equations:</p>
+<p><mathjax>$$0 = \sum_n^{N_1} [1 + \frac{N_1}{N_2} c \frac{q_1(x_n)}{q_2(x_n)}]^{-1} + \sum_n^{N_2} [1 + \frac{N_2}{N_1} \frac{q_2(x_n)}{q_1(x_n)} c^{-1}]^{-1}$$</mathjax></p>
+<p>BAR is the optimal estimator of its type--minimum variance and asymptotically unbiased.</p>
+<p>Question: Is there an equivalent procedure using data from multiple states?</p>
+<footer class="source"> 
+Bennett, 1975
+</footer></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Multistate Bennett Acceptance Ratio (MBAR)</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p><center>
+<img height=150 src=figures/mbar_title.png /></p>
+<p><img height=275 src=figures/mbar_figure.png />
+</center></p>
+<ul>
+<li>Asymptotically Unbiased</li>
+<li>Minimum variance among class of estimators</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Deriving MBAR: Ingredients</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul>
+<li><mathjax>$\{x_n\}_{n=1}^{N}$</mathjax> are independent samples drawn from states <mathjax>$s_n$</mathjax></li>
+<li><mathjax>$s_n$</mathjax> known and fixed</li>
+<li><mathjax>$K$</mathjax> states: <mathjax>$s_n \in \{1, 2, ..., K\}$</mathjax></li>
+<li>Unnormalized densities <mathjax>$q_k(x_n)$</mathjax> are known for all <mathjax>$k$</mathjax>, <mathjax>$n$</mathjax></li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Deriving MBAR: Approach</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>We want a model for computing arbitrary expectations via "quadrature":</p>
+<p><mathjax>$$\langle A(x) \rangle_k = \frac{1}{c_k} \int q_k(x)A(x) dx = \frac{1}{c_k} \sum_n \rho_n q_k(x_n) A(x_n)$$</mathjax></p>
+<ul>
+<li>Requires introducing quadrature weights <mathjax>$\rho_n$</mathjax> (masses)</li>
+<li>Nonparametric model, empirical measure, finite support <mathjax>$\{x_n\}$</mathjax></li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Deriving MBAR: Properties</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p><mathjax>$$\langle A(x) \rangle_k = \frac{1}{c_k} \int q_k(x)A(x) dx = \frac{1}{c_k} \sum_n \rho_n q_k(x_n) A(x_n)$$</mathjax></p>
+<p>Notice that <mathjax>$1 = \langle 1 \rangle_k$</mathjax> implies that</p>
+<p><mathjax>$$c_k = \sum_n \rho_n q_k(x_n)$$</mathjax></p>
+<p>Second, notice that the conditional probabilities pick up the quadrature weights due to the finite support:</p>
+<p><mathjax>$$p(x_n|s_n, \{c_k\}, \{\rho_n\}) = \langle \delta(x - x_n) \rangle_k = \frac{1}{c_{s_n}} \rho_n q_{s_n}(x_n)$$</mathjax></p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Deriving MBAR: Likelihood</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>The likelihood of our dataset is given by a product:</p>
+<p><mathjax>$$\prod_n^N P(x_n|s_n, \{c_k\}, \{\rho_n\}) =  \prod_n \frac{q_{s_n}(x_n) \rho_n}{c_{s_n}}$$</mathjax></p>
+<p>Drop <mathjax>$q_k(x_n)$</mathjax>, as it is does not depend of the parameters <mathjax>$\rho_n$</mathjax> or <mathjax>$c_k$</mathjax>:</p>
+<p><mathjax>$$\prod_n \frac{q_{s_n}(x_n) \rho_n}{c_{s_n}} \propto \prod_n \frac{\rho_n}{c_{s_n}} = \prod_n \rho_n \prod_n c_{s_n}^{-1}$$</mathjax></p>
+<footer class="source"> 
+Zan, 2000.  
+Bartels, 2000.
+Vardi, 1985.
+Gelman, 1996.
+</footer></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Deriving MBAR: Likelihood</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p><mathjax>$$\prod_n P(x_n|s_n, \{c_k\}, \{\rho_n\}) \propto \prod_n \rho_n \prod_n c_{s_n}^{-1}$$</mathjax></p>
+<p>Count and collect the normalizing constants:</p>
+<p><mathjax>$$\prod_n P(x_n|s_n, \{c_k\}, \{\rho_n\}) = \prod_n^N \rho_n \prod_k^K c_{k}^{-N_k}$$</mathjax></p>
+<p>Note that the state origin <mathjax>$s_n$</mathjax> is in the likelihood ONLY via <mathjax>$N_k$</mathjax>!  Finally, take the log:</p>
+<p><mathjax>$$LL = \sum_n^N \log \rho_n - \sum_k^K N_k \log c_k$$</mathjax></p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Deriving MBAR: MLE</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>Let's take the partial derivative of the log likelihood:</p>
+<p><mathjax>$$\frac{\partial LL}{\partial \rho_n} = \frac{1}{\rho_n} - \sum_k \frac{N_k}{c_k} \frac{\partial c_k}{\partial \rho_n}$$</mathjax></p>
+<p>From <mathjax>$c_i = \sum_n q_i(x_n) \rho_n$</mathjax>, we know that <mathjax>$\frac{\partial c_k}{\partial \rho_n} = q_i(x_n)$</mathjax></p>
+<p><mathjax>$$\frac{\partial LL}{\partial \rho_n} = \frac{1}{\rho_n} - \sum_k \frac{N_k}{c_k} q_k(x_n) = 0$$</mathjax></p>
+<p><mathjax>$$\rho_n = [\sum_k N_k c_k^{-1} q_k(x_n)]^{-1}$$</mathjax></p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>MLE solution to MBAR</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>Plugging the MLE <mathjax>$\rho_n$</mathjax> into <mathjax>$c_k$</mathjax>, we recover the self-consistent equation from the paper:</p>
+<p><mathjax>$$c_i = \sum_n^N \frac{q_i(x_n)}{\sum_k^K N_k c_k^{-1} q_k(x_n)}$$</mathjax></p>
+<p>Plugging the MLE of <mathjax>$\rho_n$</mathjax> into the LL, we can also formulate MBAR as an optimization problem with parameters <mathjax>$c_k$</mathjax>:</p>
+<p><mathjax>$$LL(c_k) = -\sum_k^K N_k \log c_k - \sum_n^N \log \sum_k^K N_k c_k^{-1} q_k(x_n)$$</mathjax></p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Solving MBAR Quickly and Precisely</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul>
+<li>Nonlinear optimization : maximize log-likelihood (fast, robust, imprecise)</li>
+<li>Nonlinear Equations : find roots of gradient (fast, fragile, precise)</li>
+<li>Self Consistent Iteration : self-consistent equation (slow, robust, precise)</li>
+</ul>
+<p>Caveats:</p>
+<ul>
+<li>Precision loss--objective function reduces 10^6 numbers into a single number</li>
+<li>Line search failures in BFGS implementations</li>
+<li>Speed</li>
+<li>Scaling</li>
+</ul>
+<p>Conclusion: for precision+speed, need to combine BFGS and NR-type.</p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Solving MBAR: Self Consistent Iteration</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p><mathjax>$$f_i^{n+1} = - \log \sum_n^N \frac{\exp(-u_i(x_n))}{\sum_k^K N_k \exp(f_k - u_k(x_n))}$$</mathjax></p>
+<p>Notice that this expression can be written as a sequence of two logsumexp operations</p>
+<p><mathjax>$$d_n = \log \sum_k^K \exp(f_k - u_k(x_n) + \log N_k)$$</mathjax>
+<mathjax>$$f_i^{n+1} = -\log \sum_n^N \exp(-u_i(x_n) - d_n)$$</mathjax></p>
+<p>The MBAR objective function and gradient can also be written using logsumexp!</p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Fast logsumexp using NumExpr</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p><mathjax>$$ \log \sum_n b_n \exp a_n = c + \log \sum_n b_n \exp(a_n - c) $$</mathjax></p>
+<p>NumExpr is a python library for optimizing large-scale algebraic operations.</p>
+<pre class="prettyprint" data-lang="python">
+import numexpr
+import numpy as np
+
+def logsumexp(a, axis):
+    a_max = np.amax(a, axis=axis, keepdims=True)
+    return a_max + np.log(numexpr.evaluate("exp(a - a_max)").sum(axis))
+    # It's actually slightly more complicated than this, but you get the idea
+
+def self_consistent_iteration(u_kn, N_k, f_k):
+    log_denominator_n = logsumexp(f_k - u_kn.T, b=N_k, axis=1)
+    return -1. * logsumexp(-log_denominator_n - u_kn, axis=1)
+
+</pre></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Fast logsumexp using NumExpr</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>Under ideal conditions, outperforms Numpy and matches hand-written C!</p>
+<article>
+<iframe  data-src="file:///home/kyleb/src/kyleabeauchamp/MBARJournalClub/notebook/Benchmark.html"></iframe>
+</article></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Conclusions and Future Work</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul>
+<li>MBAR is an estimator for combining samples from multiple distributions</li>
+<li>Estimate arbitrary expectations via summation / quadrature.</li>
+<li>Finite support on <mathjax>$\{x_n\}$</mathjax></li>
+<li>MLE</li>
+<li>Bayesian MBAR--instead of MLE, sample the posterior.</li>
+<li>Gaussian Process MBAR--plugging in alternative kernels that are supported for all <mathjax>$x$</mathjax>, rather than just <mathjax>$\{x_n\}$</mathjax>?</li>
+<li>If you want domain users to understand a model, you <em>must</em> describe it without measure theory</li>
+</ul>
+<footer class="source"> 
+Csanyi, 2014.  
+Habeck, 2012
+</footer></article>
+ 
+</slide>
+
+
+<slide class="thank-you-slide segue nobackground">
+  <!-- <aside class="gdbar right"><img src="images/google_developers_icon_128.png"></aside> -->
+  <article class="flexbox vleft auto-fadein">
+    <h2></h2>
+    <p></p>
+  </article>
+  <p data-config-contact class="auto-fadein"></p>
+  </p>
+</slide>
+
+<slide class="backdrop"></slide>
+
+</slides>
+
+<script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-XXXXXXXX-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
