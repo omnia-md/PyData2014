@@ -1,5 +1,7 @@
-% title: omnia.md: Engineering a Full Python Stack for Biophysical Computation
+% title: Engineering a full python stack for biophysical computation
 % author: Kyle A. Beauchamp
+% author: Slides here: http://tinyurl.com/n4vq9aj
+% favicon: figures/membrane.png
 
 ---
 title: Moore's Law
@@ -15,6 +17,28 @@ http://en.wikipedia.org/wiki/Moore%27s_law
 </footer>
 
 ---
+title: What about medicine?
+
+<center>
+<img height=450 src=figures/drugs.jpg/>
+</center>
+
+
+<footer class="source"> 
+http://seniorhousingforum.net/
+</footer>
+
+---
+title: New Drugs?
+
+<center>
+<img height=450 src=figures/new_mol_ent.jpg/>
+</center>
+
+<footer class="source"> 
+http://www.forbes.com/sites/matthewherper/2011/06/27/the-decline-of-pharmaceutical-researchmeasured-in-new-drugs-and-dollars/
+</footer>
+---
 title: Eroom's Law
 
 <center>
@@ -22,12 +46,12 @@ title: Eroom's Law
 </center>
 
 
-
 <footer class="source"> 
 Scannell, 2012
 </footer>
 ---
-title: How much do drugs cost?  $2,000,000
+title: How much do drugs cost?  
+subtitle: $2,000,000, 15 years, 95% fail rate
 
 <center>
 <img height=450 src=figures/cost_structure.jpg />
@@ -37,268 +61,258 @@ title: How much do drugs cost?  $2,000,000
 Paul, 2010
 </footer>
 
----
-title: Molecular Dynamics: Easy to sample, Hard to Normalize
-
-We mostly understand the microscopic rules governing proteins and ligands:
-
-$$ U(x) =  U_{bonds}(x) +  U_{angles}(x) +  U_{dihedrals}(x) +  U_{LJ}(x) + U_{electrostatic}(x)$$
-$$U_{bonds} = \sum_{i} k_i (r - r_0)^2$$
-$$U_{angles} = \sum_{i} k_i (\theta - \theta_0)^2$$
-$$U_{dihedrals} = \sum_{i} k_i (1 + \cos(n_i \phi_i + \delta_i))$$
-$$ U_{electrostatic} = \sum_{i > j} \frac{q_i q_j} {4 \pi \epsilon_0 r_{ij}} $$
 
 ---
-title: Some notation
+title: Can computers help us design drugs?
 
-$$q_k(x) = \exp(-u_k(x))$$
-$$Z_k = c_k = \int q_k(x) dx$$
-
-$$P_k(x) = \frac{1}{c_k} \exp(-u_k(x)) = \frac{1}{c_k} q_k(x_n)$$
-
-$$\langle A(x) \rangle_k = \frac{1}{c_k} \int A(x) q_k(x) dx$$
-
-Free energy:
-
-$$f_j - f_i = -\log \frac{c_j}{c_i}$$
-
-
----
-title: Applications of Normalizing Constants
-
-- Binding free energy / other chemistry applications
-- Bayesian model comparison
-- Monte Carlo integration
-
----
-title: Alchemical Free Energy Calculation
-
-Key Idea: Binding free energy is a log ratio of normalizing constants
+Pre-clinic, we've spent five years and over $200,000,000!
 
 <center>
-<img height=325 src=figures/T4-Phenol.png />
-<img height=325 src=figures/T4-Toluene.png />
+<img height=350 src=figures/cost_structure_small.jpg />
 </center>
 
 <footer class="source"> 
-alchemistry.org
+Paul, 2010
 </footer>
 
+---
+title: Can computers help us design drugs?
+
+<center>
+<img height=475 src=figures/cruise.png />
+</center>
+
+<footer class="source"> 
+Figure credit: @jchodera
+</footer>
 
 ---
-title: How to estimate normalizing constants of unnormalized distributions?
+title: A brief introduction to biophysics
 class: segue dark nobackground
 
 
 ---
-title: Exponential Averaging (EXP)
-
-Given unnormalized densities $q_1(x)$ and $q_2(x)$, notice the following "Zwanzig" identity:
-
-$$\langle \frac{q_2(x)}{q_1(x)} \rangle_1 = \frac{1}{c_1} \int \frac{q_2(x)}{q_1(x)} q_1(x) dx = \frac{1}{c_1} \int q_2(x) dx = \frac{c_2}{c_1}$$
-
-Given samples $x_n$ from $q_1(x)$, we can estimate the ratio $\frac{c_2}{c_1}$
-
-$$ \frac{c_2}{c_1} = \langle \frac{q_2(x)}{q_1(x)} \rangle_1 \approx \frac{1}{n} \sum_n \frac{q_2(x_n)}{q_1(x_n)}$$ 
-
-EXP has large bias and variance due to heavy weights in the tails.  
-
-<footer class="source"> 
-Zwanzig, 1954
-</footer>
-
----
-title: Bennet Acceptance Ratio (BAR)
-
-EXP can be improved by using samples from $q_1(x)$ and $q_2(x)$.  Requires solving nonlinear equations:
-
-$$0 = \sum_n^{N_1} [1 + \frac{N_1}{N_2} c \frac{q_1(x_n)}{q_2(x_n)}]^{-1} + \sum_n^{N_2} [1 + \frac{N_2}{N_1} \frac{q_2(x_n)}{q_1(x_n)} c^{-1}]^{-1}$$
-
-BAR is the optimal estimator of its type--minimum variance and asymptotically unbiased.
-
-Question: Is there an equivalent procedure using data from multiple states?
-
-
-<footer class="source"> 
-Bennett, 1975
-</footer>
-
----
-title: Multistate Bennett Acceptance Ratio (MBAR)
+title: How do drugs work?
+subtitle: Specifically, how do kinase inhibitor chemotherapeutics work?
 
 
 <center>
-<img height=150 src=figures/mbar_title.png />
-
-<img height=275 src=figures/mbar_figure.png />
+<img height=430 src=figures/2HW0-covalent.png />
 </center>
 
-- Asymptotically Unbiased
-- Minimum variance among class of estimators
-
-
----
-title: Deriving MBAR: Ingredients
-
-- $\{x_n\}_{n=1}^{N}$ are independent samples drawn from states $s_n$
-- $s_n$ known and fixed
-- $K$ states: $s_n \in \{1, 2, ..., K\}$
-- Unnormalized densities $q_k(x_n)$ are known for all $k$, $n$
-
-
----
-title: Deriving MBAR: Approach
-
-We want a model for computing arbitrary expectations via "quadrature":
-
-$$\langle A(x) \rangle_k = \frac{1}{c_k} \int q_k(x)A(x) dx = \frac{1}{c_k} \sum_n \rho_n q_k(x_n) A(x_n)$$
-
-- Requires introducing quadrature weights $\rho_n$ (masses)
-- Nonparametric model, empirical measure, finite support $\{x_n\}$
-
-
----
-title: Deriving MBAR: Properties
-
-$$\langle A(x) \rangle_k = \frac{1}{c_k} \int q_k(x)A(x) dx = \frac{1}{c_k} \sum_n \rho_n q_k(x_n) A(x_n)$$
-
-Notice that $1 = \langle 1 \rangle_k$ implies that
-
-$$c_k = \sum_n \rho_n q_k(x_n)$$
-
-Second, notice that the conditional probabilities pick up the quadrature weights due to the finite support:
-
-$$p(x_n|s_n, \{c_k\}, \{\rho_n\}) = \langle \delta(x - x_n) \rangle_k = \frac{1}{c_{s_n}} \rho_n q_{s_n}(x_n)$$
-
-
----
-title: Deriving MBAR: Likelihood
-
-The likelihood of our dataset is given by a product:
-
-$$\prod_n^N P(x_n|s_n, \{c_k\}, \{\rho_n\}) =  \prod_n \frac{q_{s_n}(x_n) \rho_n}{c_{s_n}}$$
-
-Drop $q_k(x_n)$, as it is does not depend of the parameters $\rho_n$ or $c_k$:
-
-$$\prod_n \frac{q_{s_n}(x_n) \rho_n}{c_{s_n}} \propto \prod_n \frac{\rho_n}{c_{s_n}} = \prod_n \rho_n \prod_n c_{s_n}^{-1}$$
 
 <footer class="source"> 
-Zan, 2000.  
-Bartels, 2000.
-Vardi, 1985.
-Gelman, 1996.
+PDB Code: 2HWO.  Figure generated by @sonyahanson
+</footer>
+---
+title: Introduction to Molecular Dynamics
+
+- Simulate the physical interactions of proteins in solution
+- Numerically integrate the equations of motion
+
+<center>
+<img height=430 src=figures/hp35_box.png />
+</center>
+
+---
+title: Atomistic Physical Modeling
+
+- Model the physics of atoms and molecules
+- Proteins, drugs, water, salt, 
+
+<div>
+<video id="sampleMovie" class="center" src="movies/shaw-dasatanib-2.mov" loop=\"true\ autoPlay=\"true\  width="512" height="384"></video>
+</div>
+
+
+---
+title: Tools for Atomistic Biophysical Models
+class: segue dark nobackground
+
+---
+title: OpenMM
+subtitle: GPU accelerated molecular dynamics engine
+
+- C++ library with (swig) Python wrapper
+- Hardware backends for CUDA, OpenCL, CPU
+- Speed, flexibility, extensibility, maintainability
+
+<center>
+<img height=300 src=figures/openmm.png />
+</center>
+
+<footer class="source"> 
+openmm.org
 </footer>
 
+---
+title: Folding@Home
+
+- Powered by backends including OpenMM and Gromacs
+- Largest distributed computing project
+- 100,000+ CPUs, 10000+ GPUs, 40 petaflops!
+
+<center>
+<img height=300 src=figures/folding-icon.png />
+</center>
+
+
+<footer class="source"> 
+http://folding.stanford.edu/
+</footer>
 
 ---
-title: Deriving MBAR: Likelihood
+title: MDTraj
+subtitle: Read, write, and analyze trajectories with only a few lines of Python.
 
-$$\prod_n P(x_n|s_n, \{c_k\}, \{\rho_n\}) \propto \prod_n \rho_n \prod_n c_{s_n}^{-1}$$
+- Multitude of formats (PDB, DCD, XTC, HDF, CDF, mol2)
+- Numpy / Cython / C / SSE kernels for geometric analysis (distances, angles, RMSD)
 
-Count and collect the normalizing constants:
+<center>
+<img height=300 src=figures/mdtraj_logo-small.png/>
+</center>
 
-$$\prod_n P(x_n|s_n, \{c_k\}, \{\rho_n\}) = \prod_n^N \rho_n \prod_k^K c_{k}^{-N_k}$$
-
-Note that the state origin $s_n$ is in the likelihood ONLY via $N_k$!  Finally, take the log:
-
-$$LL = \sum_n^N \log \rho_n - \sum_k^K N_k \log c_k$$
-
----
-title: Deriving MBAR: MLE
-
-Let's take the partial derivative of the log likelihood:
-
-$$\frac{\partial LL}{\partial \rho_n} = \frac{1}{\rho_n} - \sum_k \frac{N_k}{c_k} \frac{\partial c_k}{\partial \rho_n}$$
-
-From $c_i = \sum_n q_i(x_n) \rho_n$, we know that $\frac{\partial c_k}{\partial \rho_n} = q_i(x_n)$
-
-$$\frac{\partial LL}{\partial \rho_n} = \frac{1}{\rho_n} - \sum_k \frac{N_k}{c_k} q_k(x_n) = 0$$
-
-$$\rho_n = [\sum_k N_k c_k^{-1} q_k(x_n)]^{-1}$$
+<footer class="source"> 
+mdtraj.org
+</footer>
 
 ---
-title: MLE solution to MBAR
-
-Plugging the MLE $\rho_n$ into $c_k$, we recover the self-consistent equation from the paper:
-
-$$c_i = \sum_n^N \frac{q_i(x_n)}{\sum_k^K N_k c_k^{-1} q_k(x_n)}$$
-
-Plugging the MLE of $\rho_n$ into the LL, we can also formulate MBAR as an optimization problem with parameters $c_k$:
-
-$$LL(c_k) = -\sum_k^K N_k \log c_k - \sum_n^N \log \sum_k^K N_k c_k^{-1} q_k(x_n)$$
-
-
----
-title: Solving MBAR Quickly and Precisely
-
-- Nonlinear optimization : maximize log-likelihood (fast, robust, imprecise)
-- Nonlinear Equations : find roots of gradient (fast, fragile, precise)
-- Self Consistent Iteration : self-consistent equation (slow, robust, precise)
-
-Caveats:
-
-- Precision loss--objective function reduces 10^6 numbers into a single number
-- Line search failures in BFGS implementations
-- Speed
-- Scaling
-
-Conclusion: for precision+speed, need to combine BFGS and NR-type.
-
----
-title: Solving MBAR: Self Consistent Iteration
-
-$$f_i^{n+1} = - \log \sum_n^N \frac{\exp(-u_i(x_n))}{\sum_k^K N_k \exp(f_k - u_k(x_n))}$$
-
-Notice that this expression can be written as a sequence of two logsumexp operations
-
-$$d_n = \log \sum_k^K \exp(f_k - u_k(x_n) + \log N_k)$$
-$$f_i^{n+1} = -\log \sum_n^N \exp(-u_i(x_n) - d_n)$$
-
-The MBAR objective function and gradient can also be written using logsumexp!
-
----
-title: Fast logsumexp using NumExpr
-
-$$ \log \sum_n b_n \exp a_n = c + \log \sum_n b_n \exp(a_n - c) $$
-
-NumExpr is a python library for optimizing large-scale algebraic operations.
+title: MDTraj
+subtitle: Read, write, and analyze trajectories with only a few lines of Python.
 
 <pre class="prettyprint" data-lang="python">
-import numexpr
-import numpy as np
 
-def logsumexp(a, axis):
-    a_max = np.amax(a, axis=axis, keepdims=True)
-    return a_max + np.log(numexpr.evaluate("exp(a - a_max)").sum(axis))
-    # It's actually slightly more complicated than this, but you get the idea
+import glob
+import mdtraj as md
 
-def self_consistent_iteration(u_kn, N_k, f_k):
-    log_denominator_n = logsumexp(f_k - u_kn.T, b=N_k, axis=1)
-    return -1. * logsumexp(-log_denominator_n - u_kn, axis=1)
+filenames = glob.glob("./Trajectories/*.h5")
+trajectories = [md.load(filename) for filename in filenames]
 
 </pre>
 
 ---
-title: Fast logsumexp using NumExpr
+title: MSMBuilder / Mixtape (beta)
+subtitle: sklearn-compatible machine learning models for conformation dynamics
 
-Under ideal conditions, outperforms Numpy and matches hand-written C!
 
-<article>
-<iframe  data-src="file:///home/kyleb/src/kyleabeauchamp/MBARJournalClub/notebook/Benchmark.html"></iframe>
-</article>
 
----
-title: Conclusions and Future Work
+<center>
+<img height=300 src=figures/msmbuilder.png />
+</center>
 
-- MBAR is an estimator for combining samples from multiple distributions
-- Estimate arbitrary expectations via summation / quadrature.
-- Finite support on $\{x_n\}$
-- MLE
-- Bayesian MBAR--instead of MLE, sample the posterior.
-- Gaussian Process MBAR--plugging in alternative kernels that are supported for all $x$, rather than just $\{x_n\}$?
-- If you want domain users to understand a model, you *must* describe it without measure theory
 
 <footer class="source"> 
-Csanyi, 2014.  
-Habeck, 2012
+msmbuilder.org
 </footer>
+
+
+---
+title: MSMBuilder / Mixtape (beta)
+subtitle: sklearn-compatible machine learning models for conformation dynamics
+
+<pre class="prettyprint" data-lang="python">
+
+import mdtraj as md
+import mixtape.featurizer, mixtape.datasets, mixtape.cluster, mixtape.markovstatemodel
+import sklearn.pipeline
+
+trajectories = mixtape.datasets.alanine_dipeptide.fetch_alanine_dipeptide()["trajectories"]
+
+cluster = mixtape.cluster.KCenters(n_clusters=10, metric=md.rmsd)
+msm = mixtape.markovstatemodel.MarkovStateModel()
+pipeline = sklearn.pipeline.Pipeline([("cluster", cluster), ("msm", msm)])
+
+pipeline.fit(trajectories)
+
+</pre>
+
+---
+title: Yank (Beta)
+subtitle: Run accurate ligand binding simulations
+
+
+
+<footer class="source"> 
+https://github.com/choderalab/yank
+</footer>
+
+---
+title: Others
+
+- PDBFixer: Automatic pipeline for preparing protein simulations from crystal structures
+- pymbar: Statistical analysis toolkit for binding affinity calculations
+
+<footer class="source"> 
+omnia.md
+</footer>
+---
+title: Python Packaging Blues
+class: segue dark nobackground
+
+---
+title: Packaging scientific software is hard!
+
+- In 2008, I was compiling BLAS / Numpy / Scipy
+- 2010: Switched to Enthought python
+- 2012: Challenges with mixed language dependencies (FFTW, OpenMM)
+- GPUs are flaky
+- Non-experts unable to share code
+
+---
+title: Conda!
+
+<pre class="prettyprint" data-lang="bash">
+conda install -c https://conda.binstar.org/kyleabeauchamp omnia-md
+</pre>
+
+---
+title: Conda Packaging
+
+- Build all recipes on a Centos 6.5 Vagrant box (https://github.com/omnia-md/virtual-machines/)
+- Build
+
+
+---
+title: Automating Biophysics
+class: segue dark nobackground
+
+---
+title: Made to be broken
+subtitle: How can we falsify and refine computer based models?
+
+- Chemistry and biophysics are labor-intensive
+- Thousands of parameters = thousands of measurements
+- Reproducibilty and scalabity
+
+---
+title: Experiments
+
+- Ligand binding (fluorescence)
+- Density (of neat liquids and mixtures)
+- Isothermal Calorimetry
+
+---
+title: Robots!
+
+
+<center>
+<video width="960" height="540" controls>
+  <source src="movies/robot.mp4" type="video/mp4">
+</video>
+</center> 
+
+
+
+
+---
+title: People
+
+- John Chodera (MSKCC)
+- Patrick Grinaway (MSKCC)
+- Vijay Pande (Stanford, Folding@Home)
+- Robert McGibbon (Stanford)
+- Peter Eastman (Stanford)
+- Yutong Zhao (Stanford)
+- Joy Ku (Stanford)
+- Justin MacCallum (U. Calgary)
+- Jason Swails (Rutgers)
