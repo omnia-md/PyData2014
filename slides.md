@@ -4,8 +4,7 @@
 % favicon: figures/membrane.png
 
 ---
-title: Moore's Law
-
+title: Moore's Law: a data revolution
 
 
 <center>
@@ -29,7 +28,7 @@ http://seniorhousingforum.net/
 </footer>
 
 ---
-title: New Drugs?
+title: New Drug Approvals Stagnant
 
 <center>
 <img height=450 src=figures/new_mol_ent.jpg/>
@@ -39,7 +38,7 @@ title: New Drugs?
 http://www.forbes.com/sites/matthewherper/2011/06/27/the-decline-of-pharmaceutical-researchmeasured-in-new-drugs-and-dollars/
 </footer>
 ---
-title: Eroom's Law for R&D Efficiency
+title: erooM's Law for R&D Efficiency
 
 <center>
 <img height=450 src=figures/eroom.png />
@@ -51,7 +50,7 @@ Scannell, 2012
 </footer>
 
 ---
-title: How much do drugs cost?  
+title: The current state of drug discovery
 subtitle: $2,000,000, 000, 15 years, 95% fail rate
 
 <center>
@@ -64,7 +63,7 @@ Paul, 2010
 
 
 ---
-title: Trial and Error?
+title: Design versus trial and error
 subtitle: Pre-clinic, we've spent five years and over $200,000,000!
 
 <center>
@@ -75,8 +74,6 @@ subtitle: Pre-clinic, we've spent five years and over $200,000,000!
 Paul, 2010
 </footer>
 
----
-title: Design
 
 ---
 title: Can computers help us design drugs?
@@ -86,7 +83,7 @@ title: Can computers help us design drugs?
 </center>
 
 <footer class="source"> 
-Figure credit: @jchodera
+Figure credit: @jchodera, Tom Cruise
 </footer>
 
 ---
@@ -113,7 +110,7 @@ title: Three challenges in molecular medicine
 
 - Can we understand the microscopic behavior of proteins?
 - Can we connect this knowledge to human disease?
-- Can we engineer small molecules to control protein?
+- Can we rationally engineer small molecule inhibitors?
 
 ---
 title: Our Toolbox: Molecular Dynamics
@@ -172,9 +169,8 @@ openmm.org
 </footer>
 
 ---
-title: Folding@Home
+title: OpenMM Powers Folding@Home
 
-- Powered by backends including OpenMM and Gromacs
 - Largest distributed computing project
 - 100,000+ CPUs, 10000+ GPUs, 40 petaflops!
 
@@ -184,7 +180,8 @@ title: Folding@Home
 
 
 <footer class="source"> 
-http://folding.stanford.edu/
+http://folding.stanford.edu/ <br>
+Gromacs also works on Folding@Home: http://gromacs.org/
 </footer>
 
 ---
@@ -192,10 +189,11 @@ title: Trajectory Munging with MDTraj
 subtitle: Read, write, and analyze trajectories with only a few lines of Python.
 
 - Multitude of formats (PDB, DCD, XTC, HDF, CDF, mol2)
-- Numpy / Cython / C / SSE kernels for geometric analysis (distances, angles, RMSD)
+- Geometric trajectory analysis (distances, angles, RMSD)
+- Numpy / SSE kernels allow scaling to Folding@Home scale
 
 <center>
-<img height=300 src=figures/mdtraj_logo-small.png/>
+<img height=200 src=figures/mdtraj_logo-small.png/>
 </center>
 
 <footer class="source"> 
@@ -208,11 +206,10 @@ subtitle: Read, write, and analyze trajectories with only a few lines of Python.
 
 <pre class="prettyprint" data-lang="python">
 
-import glob
 import mdtraj as md
 
-filenames = glob.glob("./trajectories/*.h5")
-trajectories = [md.load(filename) for filename in filenames]
+trajectory = md.load("./trajectory.h5")
+indices, phi = md.compute_phi(trajectory)
 
 </pre>
 
@@ -232,7 +229,7 @@ subtitle: sklearn-compatible machine learning models for conformation dynamics
 
 
 <footer class="source"> 
-msmbuilder.org
+https://github.com/rmcgibbo/mixtape
 </footer>
 
 
@@ -256,9 +253,13 @@ pipeline.fit(trajectories)
 
 </pre>
 
+<footer class="source"> 
+https://github.com/rmcgibbo/mixtape
+</footer>
+
 ---
 title: Yank
-subtitle: Run accurate ligand binding simulations
+subtitle: Fast, accurate alchemical ligand binding simulations
 
 
 <center>
@@ -266,7 +267,6 @@ subtitle: Run accurate ligand binding simulations
 <video id="sampleMovie" class="center" src="movies/alch.mov" loop=\"true\ autoPlay=\"true\  width="512" height="384"></video>
 </div>
 </center>
-
 
 
 <footer class="source"> 
@@ -278,11 +278,11 @@ title: Python Packaging Blues
 class: segue dark nobackground
 
 ---
-title: Packaging scientific software is hard!
+title: Sharing scientific software is hard!
 
 - 2008: I was compiling BLAS / Numpy / Scipy
 - 2010: Switched to Enthought python
-- 2012: Challenges remain with mixed language dependencies (FFTW, OpenMM)
+- 2012: Mixed language challenges (FFTW, OpenMM, CUDA)
 - 2014: Non-experts still unable to share code
 
 <pre>
@@ -293,16 +293,9 @@ Him: I tried easy_install and other things and that didn't work for me.</font>
 </pre>
 
 ---
-title: Conda!
+title: glibc Hell
 
-<pre class="prettyprint" data-lang="bash">
-conda install -c https://conda.binstar.org/kyleabeauchamp omnia-md
-</pre>
-
----
-title: Avoiding glibc Hell
-
-- Build all recipes on a Centos 6.5 Vagrant box (https://github.com/omnia-md/virtual-machines/)
+- Sysadmins insist on using ancient OS versions (e.g. Redhat 5/6)
 
 <pre class="prettyprint" data-lang="bash">
 
@@ -311,8 +304,19 @@ title: Avoiding glibc Hell
 
 </pre>
 
+<footer class="source"> 
+https://github.com/choderalab/ambermini/issues/11
+</footer>
+
 ---
-title: Packaging hell is real
+title: Avoiding glibc Hell
+
+- Solution: Build all recipes on a Centos 6.5 VM
+- https://github.com/omnia-md/virtual-machines/
+- Worked for pymc too!
+
+---
+title: Conda enables package sharing
 
 <pre>
 
@@ -332,16 +336,16 @@ title: Automating Biophysics
 class: segue dark nobackground
 
 ---
-title: Made to be broken
-subtitle: How can we falsify and refine computer based models?
+title: Models are made to be broken
+subtitle: How can we falsify, refine, and use computer based models?
 
 - Chemistry and biophysics are labor-intensive
 - Thousands of parameters = thousands of measurements
 - Reproducibilty and scalabity
-- Ligand binding, liquid properties, drug properties
+- Can physical models help avoid chemotherapy resistance?
 
 ---
-title: What if experiments were as easy as Py(thon)?[WIP]
+title: Can experiments be easy as Py(thon)?
 
 
 <pre class="prettyprint" data-lang="python">
@@ -353,7 +357,7 @@ sc.generate()
 </pre>
 
 ---
-title: Robots![WIP]
+title: Robots!
 
 
 <center>
@@ -365,13 +369,12 @@ title: Robots![WIP]
 
 ---
 title: Conclusions
-subtitle: Biophysical modeling should be:
+subtitle: Biophysical modeling can be:
 
 - Reproducible
 - Tested
 - Scriptable
-- As easy as data science.
-
+- Accessible
 
 ---
 title: People
@@ -385,3 +388,12 @@ title: People
 - Joy Ku (Stanford)
 - Justin MacCallum (U. Calgary)
 - Jason Swails (Rutgers)
+
+---
+title: Biophysical computing for everyone!
+
+<pre class="prettyprint" data-lang="bash">
+conda install -c https://conda.binstar.org/kyleabeauchamp omnia-md
+</pre>
+
+After questions, I will work through a brief IPython Notebook if time permits.
