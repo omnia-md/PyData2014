@@ -19,7 +19,7 @@ http://en.wikipedia.org/wiki/Moore%27s_law
 title: Does Moore's law apply to medicine?
 
 <center>
-<img height=450 src=figures/drugs.jpg/>
+<img height=450 src=figures/drugs.jpg />
 </center>
 
 
@@ -31,7 +31,7 @@ http://seniorhousingforum.net/
 title: New Drug Approvals: Stagnant
 
 <center>
-<img height=450 src=figures/new_mol_ent.jpg/>
+<img height=450 src=figures/new_mol_ent.jpg />
 </center>
 
 <footer class="source"> 
@@ -173,7 +173,7 @@ subtitle: Read, write, and analyze trajectories with only a few lines of Python.
 - Numpy / SSE kernels allow scaling to Folding@Home scale
 
 <center>
-<img height=200 src=figures/mdtraj_logo-small.png/>
+<img height=200 src=figures/mdtraj_logo-small.png />
 </center>
 
 <footer class="source"> 
