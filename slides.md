@@ -378,7 +378,7 @@ robot.run()
 
 
 <footer class="source"> 
-Based on work by @jhprinz <br>
+Work by @jhprinz <br>
 https://github.com/choderalab/robots
 </footer>
 
