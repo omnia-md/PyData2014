@@ -113,7 +113,7 @@ title: Our Toolbox: Molecular Dynamics
 
 
 <footer class="source"> 
-Shan et al: J. Am. Chem. Soc. (2011). DOI. 
+Shan et al: J. Am. Chem. Soc. (2011). 
 </footer>
 
 ---
@@ -136,9 +136,9 @@ Church, 2011.
 title: OpenMM
 subtitle: GPU accelerated molecular dynamics
 
-- C++ library with Python wrappers
+- Extensible C++ library with Python wrappers
 - Hardware backends for CUDA, OpenCL, CPU
-- Speed, flexibility, extensibility, maintainability
+- ~100 nanoseconds per day on a GTX Titan
 
 <center>
 <img height=300 src=figures/openmm.png />
@@ -153,6 +153,7 @@ title: OpenMM Powers Folding@Home
 
 - Largest distributed computing project
 - 100,000+ CPUs, 10000+ GPUs, 40 petaflops!
+- Hundreds of microseconds per day aggregate simulation
 
 <center>
 <img height=300 src=figures/folding-icon.png />
@@ -182,7 +183,7 @@ mdtraj.org
 
 ---
 title: Trajectory munging with MDTraj
-subtitle: Read, write, and analyze trajectories with only a few lines of Python.
+subtitle: Lightweight Pythonic API
 
 <pre class="prettyprint" data-lang="python">
 
@@ -197,9 +198,20 @@ indices, phi = md.compute_phi(trajectory)
 mdtraj.org
 </footer>
 
+
+
+---
+title: MDTraj IPython Notebook
+
+<center>
+<img height=525 src=figures/mdtraj_notebook.png />
+</center>
+
+
+
 ---
 title: MSMBuilder / Mixtape
-subtitle: sklearn-compatible machine learning models for conformation dynamics
+subtitle: Markov State Models of Conformational Dynamics
 
 
 
@@ -216,7 +228,18 @@ https://github.com/rmcgibbo/mixtape
 
 ---
 title: MSMBuilder / Mixtape
-subtitle: sklearn-compatible machine learning models for conformation dynamics
+subtitle: Markov State Models of Conformational Dynamics
+
+
+
+<center>
+<img height=400 src=figures/NTL9_network.jpg />
+</center>
+
+
+---
+title: MSMBuilder / Mixtape
+subtitle: Mixtape: An sklearn-compatible framework for conformation dynamics
 
 <pre class="prettyprint" data-lang="python">
 
