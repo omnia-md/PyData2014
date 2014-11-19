@@ -392,6 +392,14 @@ Me: `conda install -c https://conda.binstar.org/omnia mdtraj`</font>
 
 
 ---
+title: Omnia: One package to rule them all
+
+<pre class="prettyprint" data-lang="bash">
+conda install -c https://conda.binstar.org/omnia/channel/test omnia
+</pre>
+
+
+---
 title: Automating Biophysics
 class: segue dark nobackground
 
@@ -467,5 +475,5 @@ title: People
 title: Questions?
 
 <pre class="prettyprint" data-lang="bash">
-conda install -c https://conda.binstar.org/omnia omnia --channel=test
+conda install -c https://conda.binstar.org/omnia/channel/test omnia
 </pre>
