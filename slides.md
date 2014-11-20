@@ -156,7 +156,8 @@ subtitle: GPU accelerated molecular dynamics
 </center>
 
 <footer class="source"> 
-openmm.org
+openmm.org <br>
+Eastman et al, 2012.
 </footer>
 
 ---
@@ -190,7 +191,8 @@ subtitle: Read, write, and analyze trajectories with only a few lines of Python.
 </center>
 
 <footer class="source"> 
-mdtraj.org
+mdtraj.org <br>
+McGibbon et al, 2014.
 </footer>
 
 ---
@@ -392,12 +394,17 @@ Me: `conda install -c https://conda.binstar.org/omnia mdtraj`</font>
 
 
 ---
-title: Omnia: One package to rule them all
+title: A full stack for biophysical computation
 
 <pre class="prettyprint" data-lang="bash">
 conda install -c https://conda.binstar.org/omnia/channel/test omnia
 </pre>
 
+- OpenMM
+- MDTraj
+- MSMBuilder / Mixtape
+- Yank
+- EMMA
 
 ---
 title: Automating Biophysics
