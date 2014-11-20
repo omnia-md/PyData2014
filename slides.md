@@ -50,7 +50,7 @@ Scannell, 2012
 </footer>
 
 ---
-title: The current state of drug discovery
+title: A crisis in drug discovery
 subtitle: Producing a drug costs $2B and 15 years, with 95% fail rate
 
 <center>
