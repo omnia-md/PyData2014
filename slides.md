@@ -1,5 +1,5 @@
 % title: Engineering a full python stack for biophysical computation
-% author: Kyle A. Beauchamp, Choderalab@MSKCC
+% author: Kyle A. Beauchamp, Patrick Grinaway, Choderalab@MSKCC
 % author: Slides here: http://tinyurl.com/n4vq9aj
 % favicon: figures/membrane.png
 
