@@ -332,14 +332,15 @@ McGibbon et al, 2014.
       <h3>Lightweight Pythonic API</h3>
     </hgroup>
     <article ><pre class="prettyprint" data-lang="python">
-
 import mdtraj as md
 
 trajectory = md.load("./trajectory.h5")
 indices, phi = md.compute_phi(trajectory)
-
 </pre>
 
+<p><center>
+<img height=300 src=figures/phi.png />
+</center></p>
 <footer class="source"> 
 mdtraj.org
 </footer></article>
@@ -405,7 +406,7 @@ from mixtape import datasets, cluster, markovstatemodel
 from sklearn.pipeline import Pipeline
 
 dataset = datasets.alanine_dipeptide.fetch_alanine_dipeptide()  # From Figshare!
-trajectories = dataset["trajectories"]
+trajectories = dataset["trajectories"]  # List of MDTraj Trajectory Objects
 
 clusterer = cluster.KCenters(n_clusters=10, metric=md.rmsd)
 msm = markovstatemodel.MarkovStateModel()
@@ -430,11 +431,12 @@ https://github.com/rmcgibbo/mixtape
     </hgroup>
     <article ><p><center>
 <div>
-<video id="sampleMovie" class="center" src="movies/alch.mov" loop=\\"true\\ autoPlay=\\"true\\  width="512" height="384"></video>
+<video id="sampleMovie" class="center" src="movies/alch.mov" loop=\"true\ autoPlay=\"true\  width="512" height="384"></video>
 </div>
 </center></p>
 <footer class="source"> 
-https://github.com/choderalab/yank
+https://github.com/choderalab/yank <br>
+http://alchemistry.org/
 </footer></article>
  
 </slide>
@@ -541,6 +543,7 @@ https://github.com/omnia-md/virtual-machines/
 <li>Travis</li>
 <li>Jenkins</li>
 <li>Binstar Build?</li>
+<li>AWS</li>
 </ul></article>
  
 </slide>
@@ -604,7 +607,7 @@ conda install -c https://conda.binstar.org/omnia/channel/test omnia
     <article ><ul>
 <li>Chemistry and biophysics are labor-intensive</li>
 <li>Thousands of parameters = thousands of measurements</li>
-<li>Reproducibilty and scalabity</li>
+<li>Reproducibilty and scalability</li>
 </ul></article>
  
 </slide>
