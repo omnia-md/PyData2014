@@ -469,7 +469,6 @@ title: Biophysical modeling should be:
 title: People
 
 - John Chodera + ChoderaLab (MSKCC)
-- Patrick Grinaway (MSKCC)
 - Vijay Pande + PandeLab (Stanford, Folding@Home)
 - Robert McGibbon (Stanford)
 - Peter Eastman (Stanford)
@@ -477,6 +476,13 @@ title: People
 - Joy Ku (Stanford)
 - Justin MacCallum (U. Calgary)
 - Jason Swails (Rutgers)
+
+<footer class="source"> 
+Daniel Parton, Jan-Hendrik Prinz, Bas Rustenburg, Sonya Hanson
+Greg Bowman, Christian Schwantes, TJ Lane, Vince Voelz, Imran Haque, Matthew Harrigan, Carlos Hernandez, Bharath Ramsundar, Lee-Ping Wang
+Frank Noe, Martin Scherer
+</footer>
+
 
 ---
 title: Questions?
