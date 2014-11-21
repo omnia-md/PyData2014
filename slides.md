@@ -200,13 +200,16 @@ title: Trajectory munging with MDTraj
 subtitle: Lightweight Pythonic API
 
 <pre class="prettyprint" data-lang="python">
-
 import mdtraj as md
 
 trajectory = md.load("./trajectory.h5")
 indices, phi = md.compute_phi(trajectory)
-
 </pre>
+
+
+<center>
+<img height=300 src=figures/phi.png />
+</center>
 
 <footer class="source"> 
 mdtraj.org
@@ -270,7 +273,7 @@ from mixtape import datasets, cluster, markovstatemodel
 from sklearn.pipeline import Pipeline
 
 dataset = datasets.alanine_dipeptide.fetch_alanine_dipeptide()  # From Figshare!
-trajectories = dataset["trajectories"]
+trajectories = dataset["trajectories"]  # List of MDTraj Trajectory Objects
 
 clusterer = cluster.KCenters(n_clusters=10, metric=md.rmsd)
 msm = markovstatemodel.MarkovStateModel()
@@ -298,7 +301,8 @@ subtitle: Fast, accurate alchemical ligand binding simulations
 
 
 <footer class="source"> 
-https://github.com/choderalab/yank
+https://github.com/choderalab/yank <br>
+http://alchemistry.org/
 </footer>
 
 ---
@@ -376,6 +380,7 @@ title: CI, Testing, and Packaging
 - Travis
 - Jenkins
 - Binstar Build?
+- AWS
 
 ---
 title: Facile package sharing
@@ -416,7 +421,7 @@ subtitle: How can we falsify and refine computer based models?
 
 - Chemistry and biophysics are labor-intensive
 - Thousands of parameters = thousands of measurements
-- Reproducibilty and scalabity
+- Reproducibilty and scalability
 
 ---
 title: Can experiments be easy as Py(thon)?
