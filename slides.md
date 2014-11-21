@@ -191,7 +191,7 @@ subtitle: Read, write, and analyze trajectories with only a few lines of Python.
 
 <footer class="source"> 
 mdtraj.org <br>
-McGibbon et al, 2014.
+McGibbon et al, 2014
 </footer>
 
 ---
@@ -211,7 +211,8 @@ indices, phi = md.compute_phi(trajectory)
 </center>
 
 <footer class="source"> 
-mdtraj.org
+mdtraj.org <br>
+McGibbon et al, 2014
 </footer>
 
 
@@ -225,7 +226,8 @@ title: MDTraj IPython Notebook
 
 
 <footer class="source"> 
-mdtraj.org
+mdtraj.org <br>
+McGibbon et al, 2014
 </footer>
 
 ---
@@ -256,7 +258,7 @@ subtitle: Markov State Models of Conformational Dynamics
 </center>
 
 <footer class="source"> 
-Voelz, Bowman, Beauchamp, Pande. J. Am. Chem. Soc., 2010.
+Voelz, Bowman, Beauchamp, Pande. J. Am. Chem. Soc., 2010
 </footer>
 
 
@@ -495,8 +497,8 @@ openmm.org
 
 mdtraj.org
 
-https://github.com/rmcgibbo/mixtape
+github.com/rmcgibbo/mixtape
 
-https://github.com/choderalab/yank/
+github.com/choderalab/yank/
 
 
