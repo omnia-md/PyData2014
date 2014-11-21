@@ -485,7 +485,7 @@ title: People
 <footer class="source"> 
 Daniel Parton, Jan-Hendrik Prinz, Bas Rustenburg, Sonya Hanson
 Greg Bowman, Christian Schwantes, TJ Lane, Vince Voelz, Imran Haque, Matthew Harrigan, Carlos Hernandez, Bharath Ramsundar, Lee-Ping Wang
-Frank Noe, Martin Scherer
+Frank Noe, Martin Scherer, Xuhui Huang, Sergio Bacallado, Mark Friedrichs
 </footer>
 
 
