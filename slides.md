@@ -94,7 +94,7 @@ subtitle: By binding and controlling misbehaving proteins
 
 
 <center>
-<img height=430 src=figures/2HW0-covalent.png />
+<img height=415 src=figures/2HW0-covalent.png />
 </center>
 
 
