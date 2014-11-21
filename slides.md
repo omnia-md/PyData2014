@@ -108,7 +108,6 @@ title: Challenges in molecular medicine
 
 - Can we link nanoscale biophysics with human disease?
 - Can we rationally engineer protein-drug binding?
-- Can we predict and prevent drug resistance?
 
 ---
 title: Our Toolbox: Molecular Dynamics
