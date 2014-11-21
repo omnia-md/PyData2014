@@ -474,16 +474,17 @@ title: Biophysical modeling should be:
 title: People
 
 - John Chodera + ChoderaLab (MSKCC)
-- Vijay Pande + PandeLab (Stanford, Folding@Home)
 - Robert McGibbon (Stanford)
 - Peter Eastman (Stanford)
+- Vijay Pande + PandeLab (Stanford)
+- Daniel Parton (MSKCC)
 - Yutong Zhao (Stanford, Folding@Home)
 - Joy Ku (Stanford)
-- Justin MacCallum (U. Calgary)
 - Jason Swails (Rutgers)
+- Justin MacCallum (U. Calgary)
 
 <footer class="source"> 
-Daniel Parton, Jan-Hendrik Prinz, Bas Rustenburg, Sonya Hanson
+Jan-Hendrik Prinz, Bas Rustenburg, Sonya Hanson
 Greg Bowman, Christian Schwantes, TJ Lane, Vince Voelz, Imran Haque, Matthew Harrigan, Carlos Hernandez, Bharath Ramsundar, Lee-Ping Wang
 Frank Noe, Martin Scherer, Xuhui Huang, Sergio Bacallado, Mark Friedrichs
 </footer>
