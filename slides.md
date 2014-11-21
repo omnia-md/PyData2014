@@ -113,7 +113,7 @@ title: Challenges in molecular medicine
 ---
 title: Our Toolbox: Molecular Dynamics
 
-- Physics-based simulations
+- Physics-based simulations of biomolecules
 - Numerically integrate (classical) equations of motion
 - Protein, water, salts, drugs
 
@@ -133,7 +133,7 @@ class: segue dark nobackground
 
 ---
 title: How do we reach biological timescales?
-subtitle: With many (10^12) iterations...
+subtitle: Challenge: 10^5 atoms, 10^12 iterations.
 
 <center>
 <img height=450 src=figures/protein_timescales.jpg />
@@ -149,7 +149,7 @@ subtitle: GPU accelerated molecular dynamics
 
 - Extensible C++ library with Python wrappers
 - Hardware backends for CUDA, OpenCL, CPU
-- ~100 nanoseconds per day on a GTX Titan
+- $>100$ nanoseconds ($10^{-7}$ s) per day on a GTX Titan
 
 <center>
 <img height=300 src=figures/openmm.png />
