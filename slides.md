@@ -373,13 +373,6 @@ title: Avoiding glibc Hell
 https://github.com/omnia-md/virtual-machines/
 </footer>
 
----
-title: CI, Testing, and Packaging
-
-- Travis
-- Jenkins
-- Binstar Build?
-- AWS
 
 ---
 title: Facile package sharing
@@ -495,3 +488,15 @@ title: Questions?
 <pre class="prettyprint" data-lang="bash">
 conda install -c https://conda.binstar.org/omnia/channel/test omnia
 </pre>
+
+omnia.md
+
+openmm.org
+
+mdtraj.org
+
+https://github.com/rmcgibbo/mixtape
+
+https://github.com/choderalab/yank/
+
+
