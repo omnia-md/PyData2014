@@ -394,6 +394,7 @@ Me: `conda install -c https://conda.binstar.org/omnia mdtraj`</font>
 
 ---
 title: A full stack for biophysical computation
+subtitle: Simulation, Munging, Analysis, Visualization
 
 <pre class="prettyprint" data-lang="bash">
 conda install -c https://conda.binstar.org/omnia/channel/test omnia
