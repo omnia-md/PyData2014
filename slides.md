@@ -183,7 +183,7 @@ subtitle: Read, write, and analyze trajectories with only a few lines of Python.
 
 - Multitude of formats (PDB, DCD, XTC, HDF, CDF, mol2)
 - Geometric trajectory analysis (distances, angles, RMSD)
-- Numpy / SSE kernels allow scaling to Folding@Home scale
+- Numpy / SSE kernels enable Folding@Home scale analysis
 
 <center>
 <img height=200 src=figures/mdtraj_logo-small.png />
@@ -403,7 +403,12 @@ conda install -c https://conda.binstar.org/omnia/channel/test omnia
 - MDTraj
 - MSMBuilder / Mixtape
 - Yank
-- EMMA
+- EMMA$^1$
+
+<footer class="source"> 
+1: Senne, Noe.  J. Chem. Theor. Comp. 2012
+</footer>
+
 
 ---
 title: Automating Biophysics
