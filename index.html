@@ -269,7 +269,7 @@ Church, 2011.
     <article ><ul>
 <li>Extensible C++ library with Python wrappers</li>
 <li>Hardware backends for CUDA, OpenCL, CPU</li>
-<li>$&gt;100$ nanoseconds ($10^{-7}$ s) per day on a GTX Titan</li>
+<li><mathjax>$&gt;100$</mathjax> nanoseconds (<mathjax>$10^{-7}$</mathjax> s) per day on a GTX Titan</li>
 </ul>
 <p><center>
 <img height=300 src=figures/openmm.png />
@@ -366,7 +366,7 @@ McGibbon et al, 2014
 <slide  >
   
     <hgroup>
-      <h2>MSMBuilder / Mixtape</h2>
+      <h2>MSMBuilder</h2>
       <h3>Finding meaning in massive simulation datasets</h3>
     </hgroup>
     <article ><p><center>
@@ -374,7 +374,7 @@ McGibbon et al, 2014
 </center></p>
 <footer class="source"> 
 msmbuilder.org <br>
-https://github.com/rmcgibbo/mixtape
+https://github.com/msmbuilder/msmbuilder
 </footer></article>
  
 </slide>
@@ -382,7 +382,7 @@ https://github.com/rmcgibbo/mixtape
 <slide  >
   
     <hgroup>
-      <h2>MSMBuilder / Mixtape</h2>
+      <h2>MSMBuilder</h2>
       <h3>Markov State Models of Conformational Dynamics</h3>
     </hgroup>
     <article ><p><center>
@@ -397,29 +397,29 @@ Voelz, Bowman, Beauchamp, Pande. J. Am. Chem. Soc., 2010
 <slide  >
   
     <hgroup>
-      <h2>MSMBuilder / Mixtape</h2>
-      <h3>Mixtape: An sklearn-compatible framework for conformation dynamics</h3>
+      <h2>MSMBuilder</h2>
+      <h3>MSMBuilder: An sklearn-compatible framework for conformation dynamics</h3>
     </hgroup>
     <article ><pre class="prettyprint" data-lang="python">
-
+# To install, `conda install -c https://conda.binstar.org/omnia msmbuilder`
 import mdtraj as md
-from mixtape import datasets, cluster, markovstatemodel
-from sklearn.pipeline import Pipeline
+from msmbuilder import example_datasets, cluster, markovstatemodel
+from sklearn.pipeline import make_pipeline
 
-dataset = datasets.alanine_dipeptide.fetch_alanine_dipeptide()  # From Figshare!
+dataset = example_datasets.alanine_dipeptide.fetch_alanine_dipeptide()  # From Figshare!
 trajectories = dataset["trajectories"]  # List of MDTraj Trajectory Objects
 
-clusterer = cluster.KCenters(n_clusters=10, metric=md.rmsd)
+clusterer = cluster.KCenters(n_clusters=10, metric="rmsd")
 msm = markovstatemodel.MarkovStateModel()
 
-pipeline = Pipeline([("clusterer", clusterer), ("msm", msm)])
+pipeline = make_pipeline(clusterer, msm)
 pipeline.fit(trajectories)
 
 </pre>
 
 <footer class="source"> 
 msmbuilder.org <br>
-https://github.com/rmcgibbo/mixtape
+https://github.com/msmbuilder/msmbuilder
 </footer></article>
  
 </slide>
@@ -432,7 +432,7 @@ https://github.com/rmcgibbo/mixtape
     </hgroup>
     <article ><p><center>
 <div>
-<video id="sampleMovie" class="center" src="movies/alch.mov" loop=\\"true\\ autoPlay=\\"true\\  width="512" height="384"></video>
+<video id="sampleMovie" class="center" src="movies/alch.mov" loop=\"true\ autoPlay=\"true\  width="512" height="384"></video>
 </div>
 </center></p>
 <footer class="source"> 
@@ -567,9 +567,9 @@ conda install -c https://conda.binstar.org/omnia/channel/test omnia
 <ul>
 <li>OpenMM</li>
 <li>MDTraj</li>
-<li>MSMBuilder / Mixtape</li>
+<li>MSMBuilder</li>
 <li>Yank</li>
-<li>EMMA$^1$</li>
+<li>EMMA<mathjax>$^1$</mathjax></li>
 </ul>
 <footer class="source"> 
 1: Senne, Noe.  J. Chem. Theor. Comp. 2012
@@ -692,13 +692,14 @@ Frank Noe, Martin Scherer, Xuhui Huang, Sergio Bacallado, Mark Friedrichs
       <h3></h3>
     </hgroup>
     <article ><pre class="prettyprint" data-lang="bash">
-conda install -c https://conda.binstar.org/omnia/channel/test omnia
+conda config --add channels http://conda.binstar.org/omnia/
+conda install -c http://conda.binstar.org/omnia/channel/omnia1_beta1 omnia
 </pre>
 
 <p>omnia.md</p>
 <p>openmm.org</p>
 <p>mdtraj.org</p>
-<p>github.com/rmcgibbo/mixtape</p>
+<p>github.com/msmbuilder/msmbuilder</p>
 <p>github.com/choderalab/yank/</p></article>
  
 </slide>

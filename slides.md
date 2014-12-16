@@ -231,7 +231,7 @@ McGibbon et al, 2014
 </footer>
 
 ---
-title: MSMBuilder / Mixtape
+title: MSMBuilder
 subtitle: Finding meaning in massive simulation datasets
 
 
@@ -243,12 +243,12 @@ subtitle: Finding meaning in massive simulation datasets
 
 <footer class="source"> 
 msmbuilder.org <br>
-https://github.com/rmcgibbo/mixtape
+https://github.com/msmbuilder/msmbuilder
 </footer>
 
 
 ---
-title: MSMBuilder / Mixtape
+title: MSMBuilder
 subtitle: Markov State Models of Conformational Dynamics
 
 
@@ -264,29 +264,29 @@ Voelz, Bowman, Beauchamp, Pande. J. Am. Chem. Soc., 2010
 
 
 ---
-title: MSMBuilder / Mixtape
-subtitle: Mixtape: An sklearn-compatible framework for conformation dynamics
+title: MSMBuilder 
+subtitle: MSMBuilder: An sklearn-compatible framework for conformation dynamics
 
 <pre class="prettyprint" data-lang="python">
-
+# To install, `conda install -c https://conda.binstar.org/omnia msmbuilder`
 import mdtraj as md
-from mixtape import datasets, cluster, markovstatemodel
-from sklearn.pipeline import Pipeline
+from msmbuilder import example_datasets, cluster, markovstatemodel
+from sklearn.pipeline import make_pipeline
 
-dataset = datasets.alanine_dipeptide.fetch_alanine_dipeptide()  # From Figshare!
+dataset = example_datasets.alanine_dipeptide.fetch_alanine_dipeptide()  # From Figshare!
 trajectories = dataset["trajectories"]  # List of MDTraj Trajectory Objects
 
-clusterer = cluster.KCenters(n_clusters=10, metric=md.rmsd)
+clusterer = cluster.KCenters(n_clusters=10, metric="rmsd")
 msm = markovstatemodel.MarkovStateModel()
 
-pipeline = Pipeline([("clusterer", clusterer), ("msm", msm)])
+pipeline = make_pipeline(clusterer, msm)
 pipeline.fit(trajectories)
 
 </pre>
 
 <footer class="source"> 
 msmbuilder.org <br>
-https://github.com/rmcgibbo/mixtape
+https://github.com/msmbuilder/msmbuilder
 </footer>
 
 ---
@@ -402,7 +402,7 @@ conda install -c https://conda.binstar.org/omnia/channel/test omnia
 
 - OpenMM
 - MDTraj
-- MSMBuilder / Mixtape
+- MSMBuilder
 - Yank
 - EMMA$^1$
 
@@ -494,7 +494,8 @@ Frank Noe, Martin Scherer, Xuhui Huang, Sergio Bacallado, Mark Friedrichs
 title: Questions?
 
 <pre class="prettyprint" data-lang="bash">
-conda install -c https://conda.binstar.org/omnia/channel/test omnia
+conda config --add channels http://conda.binstar.org/omnia/
+conda install -c http://conda.binstar.org/omnia/channel/omnia1_beta1 omnia
 </pre>
 
 omnia.md
@@ -503,7 +504,7 @@ openmm.org
 
 mdtraj.org
 
-github.com/rmcgibbo/mixtape
+github.com/msmbuilder/msmbuilder
 
 github.com/choderalab/yank/
 
